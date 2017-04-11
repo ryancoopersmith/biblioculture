@@ -4,5 +4,5 @@ class Site < ApplicationRecord
   validates :book_id, presence:true
 
   belongs_to :book
-  has_many :books through: :locations
+  has_many :books, through: :locations
 end
