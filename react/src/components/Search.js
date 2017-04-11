@@ -63,7 +63,7 @@ class Search extends Component {
     });
 
     let groupSize = 5;
-    let pageSize = 20;
+    let pageSize = Math.ceil(this.state.books.length / 5);
     let books = this.state.books.map((book, index) => {
       if ((book.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.author.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.isbn === this.state.search) && this.state.search !== '') {
         return (
@@ -100,19 +100,21 @@ class Search extends Component {
     });
 
     let page;
-    if (this.state.group > 1 && this.state.group < 19) {
-      page = <div className="center">
-      <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
-      <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
-      </div>;
-    } else if (this.state.group === 19){
-      page = <div className="center">
-      <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
-      </div>;
-    } else {
-      page = <div className="center">
-      <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
-      </div>;
+    if (this.state.search !== '') {
+      if (this.state.group > 1 && this.state.group < pageSize - 1) {
+        page = <div className="center">
+        <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
+        <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
+        </div>;
+      } else if (this.state.group === pageSize - 1){
+        page = <div className="center">
+        <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
+        </div>;
+      } else {
+        page = <div className="center">
+        <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
+        </div>;
+      }
     }
     return(
       <div>
