@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import Book from './Book';
 
-class App extends Component {
+class BookList extends Component {
   constructor(props){
     super(props);
   }
@@ -8,10 +9,10 @@ class App extends Component {
   render() {
     return(
       <div>
-        test
+        <Book />
       </div>
     );
   }
 }
 
-export default App;
+export default BookList;
