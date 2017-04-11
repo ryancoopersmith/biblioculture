@@ -10,31 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170411174042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-=======
-
-=======
->>>>>>> 61511fe4df3bdece30f652f9eadadf34647f6eeb
-ActiveRecord::Schema.define(version: 20170411174042) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-<<<<<<< HEAD
-
->>>>>>> a0fcd21fb259215488d5db0b4243dfe64080394a
-=======
->>>>>>> 61511fe4df3bdece30f652f9eadadf34647f6eeb
   create_table "books", force: :cascade do |t|
     t.string  "name"
     t.string  "author"
     t.integer "isbn"
+    t.integer "site_id"
+    t.index ["site_id"], name: "index_books_on_site_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -49,18 +35,11 @@ ActiveRecord::Schema.define(version: 20170411174042) do
   end
 
   create_table "sites", force: :cascade do |t|
-<<<<<<< HEAD
     t.string  "name"
     t.string  "url"
     t.integer "book_id"
     t.index ["book_id"], name: "index_sites_on_book_id", using: :btree
-<<<<<<< HEAD
-=======
-=======
-    t.string "name"
-    t.string "url"
   end
->>>>>>> 61511fe4df3bdece30f652f9eadadf34647f6eeb
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -79,11 +58,6 @@ ActiveRecord::Schema.define(version: 20170411174042) do
     t.string   "role"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-<<<<<<< HEAD
-
->>>>>>> a0fcd21fb259215488d5db0b4243dfe64080394a
-=======
->>>>>>> 61511fe4df3bdece30f652f9eadadf34647f6eeb
   end
 
 end
