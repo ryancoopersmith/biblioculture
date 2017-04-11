@@ -7,7 +7,7 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore all logfiles and tempfiles.
+# Ignore all log files and temp files.
 /log/*
 /tmp/*
 !/log/.keep
@@ -15,3 +15,16 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore node_modules
+/node_modules
+
+# Ignore coverage
+/coverage
+/react/coverage
+
+# Ignore dot-env
+.env
+
+# Ignore secrets
+/config/secrets.yml

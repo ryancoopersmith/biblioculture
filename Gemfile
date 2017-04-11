@@ -7,6 +7,15 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'devise'
+gem 'coveralls'
+gem 'dotenv-rails'
+gem 'ransack'
+gem 'foundation-rails'
+gem 'json'
+gem 'sidekiq'
+gem 'sinatra', github: 'sinatra/sinatra'
+gem 'sidekiq-cron'
+
 group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
@@ -26,6 +35,7 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem 'sendgrid-ruby'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
