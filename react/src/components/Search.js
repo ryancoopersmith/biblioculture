@@ -12,6 +12,7 @@ class Search extends Component {
     }
     this.updateSearch = this.updateSearch.bind(this);
     this.updateGroup = this.updateGroup.bind(this);
+    this.getBooks = this.getBooks.bind(this);
   }
 
   updateSearch(event) {
@@ -28,6 +29,30 @@ class Search extends Component {
   updateGroup(page) {
     let nextGroup = this.state.group + page;
     this.setState({ group: nextGroup });
+  }
+
+  getBooks() {
+    fetch('http://localhost:3000/api/v1/books.json', {
+      credentials: 'same-origin'
+      }).then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+              error = new Error(errorMessage);
+          throw(error);
+        }
+      })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({ books: body });
+        console.log(body)
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentDidMount() {
+    this.getBooks();
   }
 
   render() {
