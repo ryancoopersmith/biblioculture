@@ -14,7 +14,6 @@ Location.destroy_all
 User.create!(username: 'ryan', email: 'ryancoopersmith1@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
 User.create!(username: 'evi', email: 'evianneelise@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
 
-book = Book.new(name: 'The Wind in the Willows', author: 'Kenneth Grahame', isbn: '0123456789')
-site = Site.new(name: 'Find', url: 'http://www.find.com')
-# location = Location.create!(book_id: book.id, site_id: site.id)
-binding.pry
+book = Book.create!(name: 'The Wind in the Willows', author: 'Kenneth Grahame', isbn: '0123456789')
+site = Site.create!(name: 'Find', url: 'http://www.find.com')
+Location.create!(book: book, site: site)
