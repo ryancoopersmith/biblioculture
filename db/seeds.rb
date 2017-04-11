@@ -14,6 +14,6 @@ Location.destroy_all
 User.create!(username: 'ryan', email: 'ryancoopersmith1@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
 User.create!(username: 'evi', email: 'evianneelise@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
 
-book = Book.create!(name: 'The Wind in the Willows', author: 'Kenneth Grahame', isbn: '0123456789')
+book = Book.create!(name: 'The Wind in the Willows', author: 'Kenneth Grahame', isbn: '0123456789', image:"https://upload.wikimedia.org/wikipedia/en/a/a4/Wind_in_the_willows.jpg")
 site = Site.create!(name: 'Find', url: 'http://www.find.com')
 Location.create!(book: book, site: site)
