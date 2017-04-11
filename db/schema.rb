@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(version: 20170411194009) do
   enable_extension "plpgsql"
 
   create_table "books", force: :cascade do |t|
-    t.string  "name"
-    t.string  "author"
-    t.integer "isbn"
-    t.string  "image"
+    t.string "name"
+    t.string "author"
+    t.string "isbn"
+    t.string "image"
   end
 
   create_table "locations", force: :cascade do |t|

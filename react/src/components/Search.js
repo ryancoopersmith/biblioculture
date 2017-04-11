@@ -46,7 +46,6 @@ class Search extends Component {
       .then(response => response.json())
       .then(body => {
         this.setState({ books: body });
-        console.log(body)
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -56,12 +55,72 @@ class Search extends Component {
   }
 
   render() {
+    let classNames = require('classnames');
+
+    let paginateClasses = classNames({
+      'button': true,
+      'paginate': true
+    });
+
+    let groupSize = 5;
+    let pageSize = 20;
+    let books = this.state.books.map((book, index) => {
+      if ((book.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.author.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.isbn === this.state.search) && this.state.search !== '') {
+        return (
+          <BookList
+            key={index + 1}
+            image={book.image}
+            name={book.name}
+            author={book.author}
+          />
+        );
+      }
+    }).reduce((r, element, index) => {
+      index % groupSize === 0 && r.push([]);
+      r[r.length - 1].push(element);
+      return r;
+    }, []).reduce((r, element, index) => {
+      index % pageSize === 0 && r.push([]);
+      r[r.length - 1].push(element);
+      return r;
+    }, []).map((bookContent) => {
+      if (this.state.group) {
+        return(
+          <div className="row">
+            {bookContent[this.state.group - 1]}
+          </div>
+        );
+      } else {
+        return(
+          <div className="row">
+            {bookContent}
+          </div>
+        );
+      }
+    });
+
+    let page;
+    if (this.state.group > 1 && this.state.group < 19) {
+      page = <div className="center">
+      <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
+      <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
+      </div>;
+    } else if (this.state.group === 19){
+      page = <div className="center">
+      <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
+      </div>;
+    } else {
+      page = <div className="center">
+      <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
+      </div>;
+    }
     return(
       <div>
         <input type="text" className="search" placeholder="Search"
         value={this.state.search}
         onChange={this.updateSearch}/>
-        <BookList />
+        {books}
+        {page}
       </div>
     );
   }

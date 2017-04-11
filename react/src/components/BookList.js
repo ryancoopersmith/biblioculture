@@ -9,7 +9,13 @@ class BookList extends Component {
   render() {
     return(
       <div>
-        <Book />
+        <img src={this.props.image} />
+        <div className='name'>
+          {this.props.name}
+        </div>
+        <div className='author'>
+          {this.props.author}
+        </div>
       </div>
     );
   }
