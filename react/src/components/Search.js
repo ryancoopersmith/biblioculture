@@ -21,8 +21,6 @@ class Search extends Component {
     this.setState({search: event.target.value.substr(0, 100)});
     if(this.state.search.length === 1 && this.state.prevSearch > this.state.search) {
       this.setState({ group: 1 });
-    } else if(this.state.search.length > -1){
-      this.setState({ group: 0 });
     }
   }
 
@@ -84,29 +82,21 @@ class Search extends Component {
       r[r.length - 1].push(element);
       return r;
     }, []).map((bookContent) => {
-      if (this.state.group) {
-        return(
-          <div className="row">
-            {bookContent[this.state.group - 1]}
-          </div>
-        );
-      } else {
-        return(
-          <div className="row">
-            {bookContent}
-          </div>
-        );
-      }
+      return(
+        <div className="row">
+          {bookContent[this.state.group - 1]}
+        </div>
+      );
     });
 
     let page;
     if (this.state.search !== '') {
-      if (this.state.group > 1 && this.state.group < pageSize - 1) {
+      if (this.state.group > 1 && this.state.group < pageSize) {
         page = <div className="center">
         <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
         <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
         </div>;
-      } else if (this.state.group === pageSize - 1){
+      } else if (this.state.group === pageSize){
         page = <div className="center">
         <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
         </div>;
@@ -116,6 +106,7 @@ class Search extends Component {
         </div>;
       }
     }
+
     return(
       <div>
         <input type="text" className="search" placeholder="Search"
