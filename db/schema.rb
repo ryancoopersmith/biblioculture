@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411174042) do
+ActiveRecord::Schema.define(version: 20170411194009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,8 +19,7 @@ ActiveRecord::Schema.define(version: 20170411174042) do
     t.string  "name"
     t.string  "author"
     t.integer "isbn"
-    t.integer "site_id"
-    t.index ["site_id"], name: "index_books_on_site_id", using: :btree
+    t.string  "image"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -35,10 +34,8 @@ ActiveRecord::Schema.define(version: 20170411174042) do
   end
 
   create_table "sites", force: :cascade do |t|
-    t.string  "name"
-    t.string  "url"
-    t.integer "book_id"
-    t.index ["book_id"], name: "index_sites_on_book_id", using: :btree
+    t.string "name"
+    t.string "url"
   end
 
   create_table "users", force: :cascade do |t|
