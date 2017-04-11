@@ -1,24 +1,8 @@
-# README
+![Build Status](https://codeship.com/projects/10bcc490-00ff-0135-14b2-069a29c9110d/status?branch=master)
+![Code Climate](https://codeclimate.com/github/ryancoopersmith/biblioculture.png)
+![Coverage Status](https://coveralls.io/repos/ryancoopersmith/biblioculture/badge.png)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Biblioculture
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## The Stack
+Ruby on Rails and React
