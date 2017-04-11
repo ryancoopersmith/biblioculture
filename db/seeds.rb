@@ -6,5 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-ryan = User.create!(username: 'ryan', email: 'ryancoopersmith1@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
-evi = User.create!(username: 'evi', email: 'evianneelise@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
+User.destroy_all
+Book.destroy_all
+Site.destroy_all
+Location.destroy_all
+
+User.create!(username: 'ryan', email: 'ryancoopersmith1@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
+User.create!(username: 'evi', email: 'evianneelise@gmail.com', password: 'password', password_confirmation: 'password', role: 'admin')
+
+book = Book.new(name: 'The Wind in the Willows', author: 'Kenneth Grahame', isbn: '0123456789')
+site = Site.new(name: 'Find', url: 'http://www.find.com')
+# location = Location.create!(book_id: book.id, site_id: site.id)
+binding.pry
