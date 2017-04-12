@@ -68,6 +68,7 @@ class BookList extends Component {
     let groupSize = 5;
     let pageSize = Math.ceil(this.state.books.length / groupSize);
     let found = false;
+    
     let books = this.state.books.map((book, index) => {
       if ((book.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.author.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.isbn === this.state.search) && this.state.search !== '') {
         found = true

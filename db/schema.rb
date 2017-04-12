@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411194009) do
+ActiveRecord::Schema.define(version: 20170412153951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,11 @@ ActiveRecord::Schema.define(version: 20170411194009) do
     t.float   "price"
     t.integer "book_id"
     t.index ["book_id"], name: "index_prices_on_book_id", using: :btree
+  end
+
+  create_table "site_prices", force: :cascade do |t|
+    t.integer "site_id"
+    t.integer "price_id"
   end
 
   create_table "sites", force: :cascade do |t|
