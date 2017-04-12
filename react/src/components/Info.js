@@ -4,13 +4,13 @@ class Info extends Component {
   constructor(props){
     super(props);
     this.state = {
-      sites: []
+      prices: []
     }
-    this.getSites = this.getSites.bind(this);
+    this.getPrices = this.getPrices.bind(this);
   }
 
-  getSites() {
-    fetch('http://localhost:3000/api/v1/sites.json', {
+  getPrices() {
+    fetch(`http://localhost:3000/api/v1/books/${this.props.id}/prices.json`, {
       credentials: 'same-origin'
       }).then(response => {
         if (response.ok) {
@@ -23,23 +23,25 @@ class Info extends Component {
       })
       .then(response => response.json())
       .then(body => {
-        this.setState({ sites: body });
+        this.setState({ prices: body });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   componentDidMount() {
-    this.getSites();
+    this.getPrices();
   }
 
   render() {
-    let sites = this.state.sites.map((site) => {
-      return(
+    let prices = [];
+    this.state.prices.forEach((price) => {
+      prices.push(
         <div className='price'>
-          {site.name}<br />
-          {site.url}
+          <p className='siteName'>{price[0].name}</p>
+          <p className='siteURL'>{price[0].url}</p>
+          <p className='siteName'>{price[1].price}</p>
         </div>
-      )
+      );
     });
 
     return(
@@ -51,7 +53,10 @@ class Info extends Component {
         <div className='author'>
           {this.props.author}
         </div>
-        {sites}
+        <div className='isbn'>
+          {this.props.isbn}
+        </div>
+        {prices}
         <button className='button' type='button' onClick={this.props.onClick}>See All</button>
       </div>
     );

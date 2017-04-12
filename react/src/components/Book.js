@@ -42,6 +42,7 @@ class Book extends Component {
     if (this.state.toggle === true) {
       return(
         <Info
+          id={this.props.id}
           name={this.props.name}
           author={this.props.author}
           isbn={this.props.isbn}
