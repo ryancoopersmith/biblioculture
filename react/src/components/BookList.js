@@ -5,54 +5,119 @@ class BookList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      toggle: false
+      books: [],
+      search: '',
+      prevSearch: '',
+      group: 1
     }
-    this.handleClick = this.handleClick.bind(this);
-    this.seeAll = this.seeAll.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
+    this.updateGroup = this.updateGroup.bind(this);
+    this.getBooks = this.getBooks.bind(this);
   }
 
-  handleClick() {
-    this.setState ({ toggle: true })
-    let books = document.getElementsByClassName('book');
-    for (let i = 0; i < books.length; i++) {
-      document.getElementsByClassName('book')[i].style.display = 'none';
+  updateSearch(event) {
+    let prevSearch = this.state.search;
+    this.setState({ prevSearch: prevSearch });
+    this.setState({search: event.target.value.substr(0, 100)});
+    if(this.state.search.length === 1 && this.state.prevSearch > this.state.search) {
+      this.setState({ group: 1 });
     }
-    document.getElementsByClassName('paginate')[0].style.display = 'none';
   }
 
-  seeAll() {
-    this.setState ({ toggle: false })
-    let books = document.getElementsByClassName('book');
-    for (let i = 0; i < books.length; i++) {
-      document.getElementsByClassName('book')[i].style.display = 'block';
-    }
-    document.getElementsByClassName('paginate')[0].style.display = 'block';
+  updateGroup(page) {
+    let nextGroup = this.state.group + page;
+    this.setState({ group: nextGroup });
+  }
+
+  getBooks() {
+    fetch('http://localhost:3000/api/v1/books.json', {
+      credentials: 'same-origin'
+      }).then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+              error = new Error(errorMessage);
+          throw(error);
+        }
+      })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({ books: body });
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentDidMount() {
+    this.getBooks();
   }
 
   render() {
-    if (this.state.toggle === true) {
+    let classNames = require('classnames');
+
+    let paginateClasses = classNames({
+      'button': true,
+      'paginate': true
+    });
+
+    let groupSize = 5;
+    let pageSize = Math.ceil(this.state.books.length / groupSize);
+    let found = false;
+    let books = this.state.books.map((book, index) => {
+      if ((book.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.author.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.isbn === this.state.search) && this.state.search !== '') {
+        found = true
+        return (
+          <Book
+            key={index + 1}
+            image={book.image}
+            name={book.name}
+            author={book.author}
+          />
+        );
+      }
+    }).reduce((r, element, index) => {
+      index % groupSize === 0 && r.push([]);
+      r[r.length - 1].push(element);
+      return r;
+    }, []).reduce((r, element, index) => {
+      index % pageSize === 0 && r.push([]);
+      r[r.length - 1].push(element);
+      return r;
+    }, []).map((bookContent) => {
       return(
-        <Book
-          name={this.props.name}
-          author={this.props.author}
-          isbn={this.props.isbn}
-          image={this.props.image}
-          onClick={this.seeAll}
-        />
-      )
-    } else {
-      return(
-        <div onClick={this.handleClick} className='book'>
-          <img src={this.props.image} />
-          <div className='name'>
-            {this.props.name}
-          </div>
-          <div className='author'>
-            {this.props.author}
-          </div>
+        <div className="row">
+          {bookContent[this.state.group - 1]}
         </div>
       );
+    });
+
+    let page;
+    if (found) {
+      if (this.state.group > 1 && this.state.group < pageSize) {
+        page = <div className="center">
+        <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
+        <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
+        </div>;
+      } else if (this.state.group === pageSize && pageSize !== 1){
+        page = <div className="center">
+        <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
+        </div>;
+      } else if (pageSize !== 1) {
+        page = <div className="center">
+        <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
+        </div>;
+      }
     }
+
+    return(
+      <div>
+        <input type="text" className="search" placeholder="Search"
+        value={this.state.search}
+        onChange={this.updateSearch}/>
+        {books}
+        {page}
+      </div>
+    );
   }
 }
 

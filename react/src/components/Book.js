@@ -1,60 +1,71 @@
 import React, { Component } from 'react';
+import Info from './Info';
 
 class Book extends Component {
   constructor(props){
     super(props);
     this.state = {
-      sites: []
+      toggle: false
     }
-    this.getSites = this.getSites.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.seeAll = this.seeAll.bind(this);
   }
 
-  getSites() {
-    fetch('http://localhost:3000/api/v1/sites.json', {
-      credentials: 'same-origin'
-      }).then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-              error = new Error(errorMessage);
-          throw(error);
-        }
-      })
-      .then(response => response.json())
-      .then(body => {
-        this.setState({ sites: body });
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  handleClick() {
+    this.setState ({ toggle: true })
+    let books = document.getElementsByClassName('book');
+    for (let i = 0; i < books.length; i++) {
+      document.getElementsByClassName('book')[i].style.display = 'none';
+    }
+    document.getElementsByClassName('paginate')[0].style.display = 'none';
   }
 
-  componentDidMount() {
-    this.getSites();
+  seeAll() {
+    this.setState ({ toggle: false })
+    let books = document.getElementsByClassName('book');
+    for (let i = 0; i < books.length; i++) {
+      document.getElementsByClassName('book')[i].style.display = 'block';
+    }
+    document.getElementsByClassName('paginate')[0].style.display = 'block';
   }
 
   render() {
-    let sites = this.state.sites.map((site) => {
-      return(
-        <div className='price'>
-          {site.name}<br />
-          {site.url}
-        </div>
-      )
+    let classNames = require('classnames');
+
+    let gridClasses = classNames({
+      'card': true,
+      'small-2': true,
+      'columns': true,
+      'book': true
     });
 
-    return(
-      <div className='book'>
-        <img src={this.props.image} />
-        <div className='name'>
-          {this.props.name}
+    if (this.state.toggle === true) {
+      return(
+        <Info
+          name={this.props.name}
+          author={this.props.author}
+          isbn={this.props.isbn}
+          image={this.props.image}
+          onClick={this.seeAll}
+        />
+      )
+    } else {
+      return(
+        <div onClick={this.handleClick} className={gridClasses}>
+          <div className='card-divider'>
+            <div className='card-section'>
+              <img src={this.props.image} />
+              <div className='name'>
+                {this.props.name}
+              </div>
+              <div className='author'>
+                {this.props.author}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className='author'>
-          {this.props.author}
-        </div>
-        {sites}
-        <button className='button' type='button' onClick={this.props.onClick}>See All</button>
-      </div>
-    );
+      );
+    }
   }
 }
 
