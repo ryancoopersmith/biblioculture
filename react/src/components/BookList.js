@@ -60,6 +60,11 @@ class BookList extends Component {
       'paginate': true
     });
 
+    let rowClasses = classNames({
+      'row': true,
+      'align-center': true
+    });
+
     let groupSize = 5;
     let pageSize = Math.ceil(this.state.books.length / groupSize);
     let found = false;
@@ -85,7 +90,7 @@ class BookList extends Component {
       return r;
     }, []).map((bookContent) => {
       return(
-        <div className="row">
+        <div className={rowClasses}>
           {bookContent[this.state.group - 1]}
         </div>
       );
