@@ -126,6 +126,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     mustermann (1.0.0)
+    mysql2 (0.4.5)
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
@@ -287,6 +288,7 @@ DEPENDENCIES
   json
   launchy
   listen (~> 3.0.5)
+  mysql2
   pg (~> 0.18)
   pry-rails
   puma (~> 3.0)
