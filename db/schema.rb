@@ -15,7 +15,8 @@ ActiveRecord::Schema.define(version: 20170412153951) do
   create_table "books", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "author"
-    t.string "isbn"
+    t.string "isbn_10"
+    t.string "isbn_13"
     t.string "image"
   end
 

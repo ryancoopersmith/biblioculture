@@ -54,7 +54,7 @@ class Info extends Component {
           {this.props.author}
         </div>
         <div className='isbn'>
-          {this.props.isbn}
+          {this.props.isbn_10}
         </div>
         {prices}
         <button className='button' type='button' onClick={this.props.onClick}>See All</button>
