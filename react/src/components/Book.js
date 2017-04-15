@@ -13,20 +13,30 @@ class Book extends Component {
 
   handleClick() {
     this.setState ({ toggle: true })
+
     let books = document.getElementsByClassName('book');
     for (let i = 0; i < books.length; i++) {
       document.getElementsByClassName('book')[i].style.display = 'none';
     }
-    document.getElementsByClassName('paginate')[0].style.display = 'none';
+
+    let pagination = document.getElementsByClassName('paginate');
+    for (let i = 0; i < pagination.length; i++) {
+      document.getElementsByClassName('paginate')[i].style.display = 'none';
+    }
   }
 
   seeAll() {
     this.setState ({ toggle: false })
+
     let books = document.getElementsByClassName('book');
     for (let i = 0; i < books.length; i++) {
-      document.getElementsByClassName('book')[i].style.display = 'block';
+      document.getElementsByClassName('book')[i].style.display = 'inline-block';
     }
-    document.getElementsByClassName('paginate')[0].style.display = 'block';
+
+    let pagination = document.getElementsByClassName('paginate');
+    for (let i = 0; i < pagination.length; i++) {
+      document.getElementsByClassName('paginate')[i].style.display = 'inline-block';
+    }
   }
 
   render() {
@@ -45,7 +55,8 @@ class Book extends Component {
           id={this.props.id}
           name={this.props.name}
           author={this.props.author}
-          isbn={this.props.isbn}
+          isbn_10={this.props.isbn_10}
+          isbn_13={this.props.isbn_13}
           image={this.props.image}
           onClick={this.seeAll}
         />

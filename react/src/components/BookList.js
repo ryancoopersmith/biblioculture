@@ -76,7 +76,8 @@ class BookList extends Component {
           <Book
             key={index + 1}
             id={book.id}
-            isbn={book.isbn}
+            isbn_10={book.isbn_10}
+            isbn_13={book.isbn_13}
             image={book.image}
             name={book.name}
             author={book.author}

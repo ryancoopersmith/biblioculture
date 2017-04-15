@@ -37,9 +37,9 @@ class Info extends Component {
     this.state.prices.forEach((price) => {
       prices.push(
         <div className='price'>
-          <p className='siteName'>{price[0].name}</p>
-          <p className='siteURL'>{price[0].url}</p>
-          <p className='siteName'>{price[1].price}</p>
+          <p className='siteName'>Site: {price[0].name}</p>
+          <p className='siteURL'>URL: {price[0].url}</p>
+          <p className='siteName'>Best Price: ${price[1].price}</p>
         </div>
       );
     });
@@ -51,10 +51,13 @@ class Info extends Component {
           {this.props.name}
         </div>
         <div className='author'>
-          {this.props.author}
+          By: {this.props.author}
         </div>
         <div className='isbn'>
-          {this.props.isbn_10}
+          ISBN-10: {this.props.isbn_10}
+        </div>
+        <div className='isbn'>
+          ISBN-13: {this.props.isbn_13}
         </div>
         {prices}
         <button className='button' type='button' onClick={this.props.onClick}>See All</button>
