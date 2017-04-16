@@ -18,9 +18,11 @@ class BookList extends Component {
   updateSearch(event) {
     let prevSearch = this.state.search;
     this.setState({ prevSearch: prevSearch });
-    this.setState({search: event.target.value.substr(0, 100)});
-    if(this.state.search.length === 1 && this.state.prevSearch > this.state.search) {
+    this.setState({ search: event.target.value });
+    if (this.state.search.length === 1 && this.state.prevSearch > this.state.search) {
       this.setState({ group: 1 });
+    } else if (this.state.search.length > -1){
+      this.setState({ group: 0 });
     }
   }
 
@@ -70,7 +72,7 @@ class BookList extends Component {
     let found = false;
 
     let books = this.state.books.map((book, index) => {
-      if ((book.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.author.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.isbn === this.state.search) && this.state.search !== '') {
+      if (book.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.author.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.isbn_10 === this.state.search || book.isbn_13 === this.state.search) {
         found = true
         return (
           <Book
@@ -93,11 +95,19 @@ class BookList extends Component {
       r[r.length - 1].push(element);
       return r;
     }, []).map((bookContent) => {
-      return(
-        <div className={rowClasses}>
-          {bookContent[this.state.group - 1]}
-        </div>
-      );
+      if (this.state.group) {
+        return(
+          <div className={rowClasses}>
+            {bookContent[this.state.group - 1]}
+          </div>
+        );
+      } else {
+        return(
+          <div className={rowClasses}>
+            {bookContent}
+          </div>
+        );
+      }
     });
 
     let page;
