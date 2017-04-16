@@ -16,6 +16,7 @@ gem 'sidekiq'
 gem 'sinatra', github: 'sinatra/sinatra'
 gem 'sidekiq-cron'
 gem 'mysql2'
+gem 'redis'
 
 group :development do
   gem 'listen', '~> 3.0.5'

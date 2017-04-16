@@ -1,0 +1,10 @@
+<h1>Add Room</h1>
+
+<%= form_for @room do |f| %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, autofocus: true %>
+  </div>
+
+  <%= f.submit 'Add', class: 'button' %>
+<% end %>

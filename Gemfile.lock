@@ -295,6 +295,7 @@ DEPENDENCIES
   rails (~> 5.0.0)
   rails_12factor
   ransack
+  redis
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
   sendgrid-ruby

@@ -1,7 +1,5 @@
-<% cache message do %>
-  <div class="message">
-    <p>
-      <%= message.content %>
-    </p>
-  </div>
-<% end %>
+<div class="row">
+  <%= gravatar_for message.user %>
+  <span><%= message.user.username %> at <% message.timestamp %> says</span><br />
+  <%= message.body %>
+</div>

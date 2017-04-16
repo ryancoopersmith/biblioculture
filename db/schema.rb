@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415192548) do
+ActiveRecord::Schema.define(version: 20170416151010) do
 
   create_table "books", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 20170415192548) do
   end
 
   create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.text     "content",    limit: 65535
+    t.text     "body",       limit: 65535
+    t.integer  "user_id"
+    t.integer  "room_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -35,6 +37,13 @@ ActiveRecord::Schema.define(version: 20170415192548) do
     t.float   "price",   limit: 24
     t.integer "book_id"
     t.index ["book_id"], name: "index_prices_on_book_id", using: :btree
+  end
+
+  create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "site_prices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
