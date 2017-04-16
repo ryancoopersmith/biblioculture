@@ -26,8 +26,5 @@
 # Ignore dot-env
 .env
 
-# Ignore secrets
-/config/secrets.yml
-
 # Ignore database config
 /config/database.yml
