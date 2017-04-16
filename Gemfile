@@ -18,6 +18,8 @@ gem 'sinatra', github: 'sinatra/sinatra'
 gem 'sidekiq-cron'
 gem 'mysql2'
 gem 'redis'
+gem 'carrierwave'
+gem 'fog'
 
 group :development do
   gem 'listen', '~> 3.0.5'
@@ -34,6 +36,7 @@ group :development, :test do
   gem 'shoulda'
   gem 'valid_attribute'
   gem 'database_cleaner'
+  gem 'mailcatcher'
 end
 
 group :production do

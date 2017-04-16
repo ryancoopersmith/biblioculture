@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  after_create :send_email
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -10,4 +11,10 @@ class User < ApplicationRecord
 
   has_many :rooms, dependent: :destroy
   has_many :messages, dependent: :destroy
+
+  mount_uploader :profile_photo, ProfilePhotoUploader
+
+  def send_email
+    UserMailer.new_user(self).deliver
+  end
 end

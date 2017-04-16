@@ -1,5 +1,5 @@
 <div class="row">
-  <%= gravatar_for message.user %>
+  <img src="<%= message.user.profile_photo %>" height=150 width=150 />
   <span><%= message.user.username %> at <%= message.timestamp %> says</span><br />
   <%= message.body %>
 </div>
