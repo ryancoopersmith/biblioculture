@@ -11,7 +11,7 @@
   <body>
     <div class="top-bar">
       <div class="top-bar-title">
-        <h1><%=link_to "Biblioculture", root_path%></h1>
+        <h1><%= link_to 'Biblioculture', books_path, data: { turbolinks: false } %></h1>
       </div>
       <div class="top-bar-right">
         <% if request.env['PATH_INFO'] != "/users/sign_up" && request.env['PATH_INFO'] != "/users/sign_in" && request.env['PATH_INFO'] != "/users/edit" && request.env['PATH_INFO'] != "/users/password/new" %>
@@ -35,7 +35,7 @@
         <% end %>
       </div>
     </div>
-    
+
     <div class="flash">
       <% if flash[:notice] %>
         <% if flash[:notice].is_a?(String) %>

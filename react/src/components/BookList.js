@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Book from './Book';
+import 'whatwg-fetch';
 
 class BookList extends Component {
   constructor(props){
