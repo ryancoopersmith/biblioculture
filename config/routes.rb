@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  root 'books#index', as: :authenticated_root
   resources :books, only: [:index]
 
   devise_for :users
+
+  root 'books#index'
 
   resources :rooms, only: [:new, :create, :show, :index]
 
@@ -17,5 +18,6 @@ Rails.application.routes.draw do
   end
 
   resources :terms, only: [:index]
+
   resources :privacy, only: [:index]
 end
