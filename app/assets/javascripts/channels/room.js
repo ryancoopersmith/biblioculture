@@ -29,6 +29,21 @@ jQuery(document).on('turbolinks:load', function() {
       textarea = $this.find('#message_body');
       if ($.trim(textarea.val()).length > 1) {
         App.global_room.send_message(textarea.val(), messages.data('room-id'));
+        var message = String(textarea.val()).split('');
+        var letters = [];
+        for (var i = 0; i < message.length; i++) {
+          if (message[i] === '@' && message[i + 1] !== ' ') {
+            var counter = i + 1;
+            var letter = message[counter];
+            while (letter !== ' ' && letter !== '.' && letter !== '!' && letter !== '?' && counter < message.length) {
+              letters.push(letter);
+              counter++;
+              letter = message[counter];
+            }
+          }
+        }
+        var person = letters.join('')
+        // send email to person
         textarea.val('');
       }
       e.preventDefault();
