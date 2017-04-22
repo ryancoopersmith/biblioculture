@@ -1,5 +1,16 @@
 require 'open-uri'
+require 'nokogiri'
 
-url = "https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=the+great+gatsby"
+url = "https://www.reddit.com/"
 doc = Nokogiri::HTML(open(url))
-puts doc.at_css("title").text
+
+entries = doc.css('.entry') # I can use xpath like normal here
+
+class Entry
+	def initialize(title, link)
+		@title = title
+		@link = link
+	end
+	attr_reader :title
+	attr_reader :link
+end
