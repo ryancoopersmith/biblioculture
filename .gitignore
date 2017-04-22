@@ -25,6 +25,3 @@
 
 # Ignore dot-env
 .env
-
-# Ignore database config
-/config/database.yml
