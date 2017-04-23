@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
-  resources :books, only: [:index] do
-    collection do
-      get 'crawl'
-    end
-  end
+  resources :books, except: [:destroy]
 
   devise_for :users
 

@@ -1,0 +1,27 @@
+<h1>Add Book</h1>
+
+<h3>You can add a book by entering its title, ISBN-10 or ISBN-13</h3>
+
+<%= form_for @book do |f| %>
+  <i>(Optional)</i>
+  <div class="field">
+    <%= f.label :name, 'Title' %>
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <i>(Optional)</i>
+  <div class="field">
+    <%= f.label :isbn_10, 'ISBN-10' %>
+    <%= f.text_field :isbn_10, autofocus: true %>
+  </div>
+
+  <i>(Optional)</i>
+  <div class="field">
+    <%= f.label :isbn_13, 'ISBN-13' %>
+    <%= f.text_field :isbn_13, autofocus: true %>
+  </div>
+
+  <%= f.submit 'Add', class: 'button' %>
+<% end %>
+
+<%= link_to 'Go Back', books_path, data: { turbolinks: false }, class: 'button' %>
