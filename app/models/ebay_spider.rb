@@ -7,41 +7,56 @@ class EbaySpider
     @name = options[:name] || ''
     @isbn_10 = options[:isbn_10] || ''
     @isbn_13 = options[:isbn_13] || ''
+    @doc = ''
   end
 
   def parse
     if @name
-      return Nokogiri::HTML(open("http://search.half.ebay.com/#{@name}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
+      @doc = Nokogiri::HTML(open("http://search.half.ebay.com/#{@name}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
     elsif @isbn_10
-      return Nokogiri::HTML(open("http://search.half.ebay.com/#{@isbn_10}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
+      @doc = Nokogiri::HTML(open("http://search.half.ebay.com/#{@isbn_10}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
     else
-      return Nokogiri::HTML(open("http://search.half.ebay.com/#{@isbn_13}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
+      @doc = Nokogiri::HTML(open("http://search.half.ebay.com/#{@isbn_13}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
     end
   end
 
-  def scrape
-    books = response.xpath('//*[@class="imageborder"]/@href').extract()
+  def scrape_name
+    # may possibly need this
+    # books = @doc.xpath('//*[@class="imageborder"]/@href')
 
-    name = response.xpath('//*[@class="pdppagetitle"]/text()').extract_first()
+    @doc.xpath('//*[@class="pdppagetitle"]/text()')
+  end
 
-    authors = response.xpath('//*[@class="pdplinks"]/*[@class="pdplinks"]/text()').extract()
-    author = authors.join(', ')
+  def scrape_author
+    authors = @doc.xpath('//*[@class="pdplinks"]/*[@class="pdplinks"]/text()')
+    authors.join(', ')
+  end
 
-    isbn_10 = isbn(reponse, 'ISBN-10:')
-    isbn_13 = isbn(response, 'ISBN-13:')
+  def scrape_isbn_10
+    isbn('ISBN-10:')
+  end
 
-    image = response.xpath('//tr/td/*[@class="imageborder"]/@src').extract_first()
+  def scrape_isbn_13
+    isbn('ISBN-13:')
+  end
 
-    price = response.xpath('//*[@class="pdpbestpricestyle"]/text()').extract_first()
+  def scrape_image
+    @doc.xpath('//tr/td/*[@class="imageborder"]/@src')
+  end
+
+  def scrape_price
+    price = @doc.xpath('//*[@class="pdpbestpricestyle"]/text()')
 
     if price
       price.gsub!('$', '')
     else
       price = 0
     end
+
+    price
   end
 
-  def isbn(response, value)
-    return response.xpath('//*[text()="' + value + '"]/following-sibling::span/a/text()').extract_first()
+  def isbn(value)
+    @doc.xpath('//*[text()="' + value + '"]/following-sibling::span/a/text()')
   end
 end

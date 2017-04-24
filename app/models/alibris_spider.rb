@@ -7,32 +7,45 @@ class AlibrisSpider
     @name = options[:name] || ''
     @isbn_10 = options[:isbn_10] || ''
     @isbn_13 = options[:isbn_13] || ''
+    @doc = ''
   end
 
   def parse
     if @name
-      return Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{@name}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
+      @doc = Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{@name}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
     elsif @isbn_10
-      return Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{@isbn_10}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
+      @doc = Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{@isbn_10}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
     else
-      return Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{@isbn_13}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
+      @doc = Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{@isbn_13}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
     end
   end
 
-  def scrape
-    books = response.xpath('//*[@id="selected-works"]/ul/li/a/@href').extract()
+  def scrape_name
+    # may possibly need this
+    # books = @doc.xpath('//*[@id="selected-works"]/ul/li/a/@href')
 
-    name = response.xpath('//*[@class="product-title"]/h1/text()').extract_first()
+    @doc.xpath('//*[@class="product-title"]/h1/text()')
+  end
 
-    authors = response.xpath('//*[@itemprop="author"]/*[@itemprop="name"]/text()').extract()
-    author = authors.join(', ')
+  def scrape_author
+    authors = @doc.xpath('//*[@itemprop="author"]/*[@itemprop="name"]/text()')
+    authors.join(', ')
+  end
 
-    isbn_10 = 'not provided'
-    isbn_13 = response.xpath('//*[@class="isbn-link"]/text()').extract_first()
+  def scrape_isbn_10
+    'not provided'
+  end
 
-    image = response.xpath('//*[@itemprop="image"]/@src').extract_first()
+  def scrape_isbn_13
+    @doc.xpath('//*[@class="isbn-link"]/text()')
+  end
 
-    price = response.xpath('//*[@id="tabAll"]/span/text()').extract_first()
+  def scrape_image
+    @doc.xpath('//*[@itemprop="image"]/@src')
+  end
+
+  def scrape_price
+    price = @doc.xpath('//*[@id="tabAll"]/span/text()')
     if price
       price = price.split(' ')
       price = price[1]
@@ -40,5 +53,7 @@ class AlibrisSpider
     else
       price = 0
     end
+
+    price
   end
 end

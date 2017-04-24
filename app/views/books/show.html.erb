@@ -1,1 +1,10 @@
+<h1><%= @book.name %></h1>
+
+<h3>By: <%= @book.author %></h3>
+
+<img src="<%= @book.image %>" width=300 height=300 />
+
+<p>ISBN-10: <%= @book.isbn_10 %></p>
+<p>ISBN-13: <%= @book.isbn_13 %></p>
+
 <%= link_to 'Go Back', books_path, data: { turbolinks: false }, class: 'button' %>

@@ -28,6 +28,12 @@ class BooksController < ApplicationController
     alibris_spider = AlibrisSpider.new(input)
     powells_spider = PowellsSpider.new(input)
 
+    @book.name = ebay_spider.scrape_name
+    @book.author = ebay_spider.scrape_author
+    @book.image = ebay_spider.scrape_image
+    @book.isbn_10 = ebay_spider.scrape_isbn_10
+    @book.isbn_13 = ebay_spider.scrape_isbn_13
+
     # Make the crawler work if the search goes directly to the book show page or to the results
 
     @location = Location.new
