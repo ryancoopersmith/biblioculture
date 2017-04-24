@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class EbaySpider
   attr_accessor :name, :isbn_10, :isbn_13
 

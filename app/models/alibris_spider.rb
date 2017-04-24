@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class AlibrisSpider
   attr_accessor :name, :isbn_10, :isbn_13
 

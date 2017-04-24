@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class PowellsSpider
   attr_accessor :name, :isbn_10, :isbn_13
 

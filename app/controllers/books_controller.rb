@@ -10,43 +10,23 @@ class BooksController < ApplicationController
   end
 
   def create
-    require 'open-uri'
-
     @book = Book.new
 
     if books_params['name']
-      name = books_params['name']
-
-      amazon_doc = Nokogiri::HTML(open("https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=#{name}"))
-      ebay_doc = Nokogiri::HTML(open("http://search.half.ebay.com/#{name}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
-      alibris_doc = Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{name}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
-      powells_doc = Nokogiri::HTML(open("http://www.powells.com/SearchResults?kw=title:#{name}"))
-
-      @book.name = name
+      input = books_params['name']
     elsif books_params['isbn_10']
-      isbn_10 = books_params['isbn_10']
-
-      amazon_doc = Nokogiri::HTML(open("https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=#{isbn_10}"))
-      ebay_doc = Nokogiri::HTML(open("http://search.half.ebay.com/#{isbn_10}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
-      alibris_doc = Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{isbn_10}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
-      # for powells get the name of the book from the alibris spider and interpolate it in the following url:
-      # powells_doc = Nokogiri::HTML(open("http://www.powells.com/SearchResults?kw=title:#{name}"))
-
-      @book.isbn_10 = isbn_10
+      input = books_params['isbn_10']
     elsif books_params['isbn_13']
-      isbn_13 = books_params['isbn_13']
-
-      amazon_doc = Nokogiri::HTML(open("https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=#{isbn_13}"))
-      ebay_doc = Nokogiri::HTML(open("http://search.half.ebay.com/#{isbn_13}_W0QQ_trksidZp3030Q2em1446Q2el2686"))
-      alibris_doc = Nokogiri::HTML(open("http://www.alibris.com/booksearch?keyword=#{isbn_13}&mtype=B&hs.x=0&hs.y=0&hs=Submit"))
-      # for powells get the name of the book from the alibris spider and interpolate it in the following url:
-      # powells_doc = Nokogiri::HTML(open("http://www.powells.com/SearchResults?kw=title:#{name}"))
-
-      @book.isbn_13 = isbn_13
+      input = books_params['isbn_13']
     else
       flash[:notice] = 'You must supply either the title, ISBN-10 or ISBN-13'
       render action: 'new'
     end
+
+    amazon_spider = AmazonSpider.new(input)
+    ebay_spider = EbaySpider.new(input)
+    alibris_spider = AlibrisSpider.new(input)
+    powells_spider = PowellsSpider.new(input)
 
     # Make the crawler work if the search goes directly to the book show page or to the results
 
