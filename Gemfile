@@ -20,6 +20,7 @@ gem 'redis'
 gem 'carrierwave'
 gem 'fog'
 gem 'nokogiri'
+gem 'mechanize'
 
 group :development do
   gem 'listen', '~> 3.0.5'

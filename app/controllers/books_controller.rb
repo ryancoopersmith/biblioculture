@@ -50,14 +50,6 @@ class BooksController < ApplicationController
 
     # Make the crawler work if the search goes directly to the book show page or to the results
 
-    entries = doc.css('.entry')
-    @entriesArray = []
-    entries.each do |entry|
-      title = entry.css('p.title>a').text
-      link = entry.css('p.title>a')[0]['href']
-      @entriesArray << Entry.new(title, link)
-    end
-
     @location = Location.new
     @site = Site.new
     @price = Price.new
