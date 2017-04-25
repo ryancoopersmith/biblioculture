@@ -71,6 +71,8 @@ GEM
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
+    childprocess (0.5.9)
+      ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
@@ -377,6 +379,7 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     ruby_http_client (3.0.2)
+    rubyzip (1.2.1)
     rufus-scheduler (3.4.0)
       et-orbi (~> 1.0)
     sass (3.4.23)
@@ -386,6 +389,10 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (3.4.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     sendgrid-ruby (4.0.8)
       ruby_http_client (~> 3.0.1)
     shoulda (3.5.0)
@@ -456,6 +463,7 @@ GEM
     warden (1.2.7)
       rack (>= 1.0)
     webrobots (0.1.2)
+    websocket (1.2.4)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -492,6 +500,7 @@ DEPENDENCIES
   redis
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
+  selenium-webdriver
   sendgrid-ruby
   shoulda
   sidekiq

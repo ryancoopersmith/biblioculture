@@ -3,6 +3,26 @@ class BooksController < ApplicationController
   end
 
   def show
+    @book = Book.find(params[:id])
+    locations = Location.where(book: @book)
+
+    sites = []
+
+    locations.each do |location|
+      sites << location.site
+    end
+
+    @prices = []
+
+    sites.each do |site|
+      site_prices = SitePrice.where(site: site)
+
+      site_prices.each do |site_price|
+        if site_price.price.book == @book
+          @prices << [site, site_price.price]
+        end
+      end
+    end
   end
 
   def new
@@ -23,23 +43,22 @@ class BooksController < ApplicationController
       render action: 'new'
     end
 
-    amazon_spider = AmazonSpider.new(input)
-    ebay_spider = EbaySpider.new(input)
-    alibris_spider = AlibrisSpider.new(input)
-    powells_spider = PowellsSpider.new(input)
+    google_spider = GoogleSpider.new(input)
 
-    @book.name = ebay_spider.scrape_name
-    @book.author = ebay_spider.scrape_author
-    @book.image = ebay_spider.scrape_image
-    @book.isbn_10 = ebay_spider.scrape_isbn_10
-    @book.isbn_13 = ebay_spider.scrape_isbn_13
+    @book.name = google_spider.name
+    @book.author = google_spider.author
+    @book.image = google_spider.image
+    @book.isbn_10 = google_spider.isbn_10
+    @book.isbn_13 = google_spider.isbn_13
 
-    # Make the crawler work if the search goes directly to the book show page or to the results
+    google_spider.scrape_prices_and_sites.each do |site|
+      Site.new(site: site[0], book: @book)
+      Price.new(price: site[1], book: @book)
+      SitePrice.new(site: site[0], price: site[1])
+      Location.new(site: site[0], book: @book)
+    end
 
-    @location = Location.new
-    @site = Site.new
-    @price = Price.new
-    @site_price = SitePrice.new
+    redirect_to @book
   end
 
   def edit

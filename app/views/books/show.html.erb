@@ -7,4 +7,10 @@
 <p>ISBN-10: <%= @book.isbn_10 %></p>
 <p>ISBN-13: <%= @book.isbn_13 %></p>
 
+<h3>Prices</h3>
+
+<% @prices.each do |price| %>
+  <p>Site: <%= price[0] %>, Price: <%= price[1] %></p>
+<% end %>
+
 <%= link_to 'Go Back', books_path, data: { turbolinks: false }, class: 'button' %>
