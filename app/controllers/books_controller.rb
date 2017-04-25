@@ -52,7 +52,8 @@ class BooksController < ApplicationController
     @book.isbn_10 = google_spider.isbn_10
 
     google_spider.scrape_prices_and_sites.each do |site|
-      Site.new(site: site[0], book: @book)
+      binding.pry
+      Site.new(name: site[0])
       Price.new(price: site[1], book: @book)
       SitePrice.new(site: site[0], price: site[1])
       Location.new(site: site[0], book: @book)
