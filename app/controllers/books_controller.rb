@@ -32,24 +32,24 @@ class BooksController < ApplicationController
   def create
     @book = Book.new
 
-    if books_params['name']
-      input = books_params['name']
-    elsif books_params['isbn_10']
-      input = books_params['isbn_10']
-    elsif books_params['isbn_13']
-      input = books_params['isbn_13']
+    if books_params['name'] != ''
+      google_spider = GoogleSpider.new(name: books_params['name'])
+    elsif books_params['isbn_10'] != ''
+      google_spider = GoogleSpider.new(isbn_10: books_params['isbn_10'])
+    elsif books_params['isbn_13'] != ''
+      google_spider = GoogleSpider.new(isbn_13: books_params['isbn_13'])
+      @book.isbn_13 = google_spider.isbn_13
     else
       flash[:notice] = 'You must supply either the title, ISBN-10 or ISBN-13'
       render action: 'new'
     end
 
-    google_spider = GoogleSpider.new(input)
+    google_spider.find_book
 
     @book.name = google_spider.name
     @book.author = google_spider.author
     @book.image = google_spider.image
     @book.isbn_10 = google_spider.isbn_10
-    @book.isbn_13 = google_spider.isbn_13
 
     google_spider.scrape_prices_and_sites.each do |site|
       Site.new(site: site[0], book: @book)

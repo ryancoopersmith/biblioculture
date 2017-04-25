@@ -11,18 +11,18 @@ class GoogleSpider
     unfiltered_name.gsub(' [Book]', '')
   end
 
-  def isbn_10
-    unfiltered_isbn_10 = @parsed_page.xpath('//span[starts-with(text(),"ISBN")]/text()').text
-    unfiltered_isbn_10.gsub('ISBN ', '')
+  def author
+    unfiltered_author = @parsed_page.xpath('//*[@id="summary-container"]/div[5]/div/span[1]').text
+    unfiltered_author.gsub('by ', '')
   end
 
   def image
     @parsed_page.xpath('//*[@id="alt-image-cont"]/div/img/@src').text
   end
 
-  def author
-    unfiltered_author = @parsed_page.xpath('//*[@id="summary-container"]/div[5]/div/span[1]').text
-    unfiltered_author.gsub('by ', '')
+  def isbn_10
+    unfiltered_isbn_10 = @parsed_page.xpath('//span[starts-with(text(),"ISBN")]/text()').text
+    unfiltered_isbn_10.gsub('ISBN ', '')
   end
 
   def find_book
