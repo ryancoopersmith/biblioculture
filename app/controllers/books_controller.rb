@@ -52,14 +52,19 @@ class BooksController < ApplicationController
     @book.isbn_10 = google_spider.isbn_10
 
     google_spider.scrape_prices_and_sites.each do |site|
-      binding.pry
-      Site.new(name: site[0])
-      Price.new(price: site[1], book: @book)
-      SitePrice.new(site: site[0], price: site[1])
-      Location.new(site: site[0], book: @book)
+      book_site = Site.new(name: site[0])
+      book_price = Price.new(price: site[1], book: @book)
+      SitePrice.new(site: book_site, price: book_price)
+      Location.new(site: book_site, book: @book)
     end
 
-    redirect_to @book
+    if @book.save
+      redirect_to @book
+    else
+      flash[:notice] = 'There was an error finding the book'
+      @book = Book.new
+      render action: 'new'
+    end
   end
 
   def edit
