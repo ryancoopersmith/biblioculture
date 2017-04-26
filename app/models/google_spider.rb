@@ -43,8 +43,10 @@ class GoogleSpider
     page = agent.page.link_with(text: "Shop for buy #{value} book on Google").click
 
     page = agent.page.link_with(text: /^.*\[Book\]$/).click
-    page = agent.page.link_with(text: /^View\sall\s[0-9]+\sonline\sstores.*$/).click
-    page = agent.page.link_with(text: /^.*((R)|(r)){1}efurbished\s*\/\s*used.*$/).click
+    if agent.page.link_with(text: /^View\sall\s[0-9]+\sonline\sstores.*$/)
+      page = agent.page.link_with(text: /^View\sall\s[0-9]+\sonline\sstores.*$/).click
+      page = agent.page.link_with(text: /^.*((R)|(r)){1}efurbished\s*\/\s*used.*$/).click
+    end
     @parsed_page = Nokogiri::HTML(page.content)
   end
 

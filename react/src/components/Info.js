@@ -39,7 +39,7 @@ class Info extends Component {
       prices.push(
         <div className='price'>
           <p className='siteName'>Site: {price[0].name}</p>
-          <p className='siteName'>Best Price: ${price[1].price}</p>
+          <p className='siteName'>Best Price: {price[1].price}</p>
         </div>
       );
     });
