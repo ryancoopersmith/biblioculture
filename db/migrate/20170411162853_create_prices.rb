@@ -1,7 +1,7 @@
 class CreatePrices < ActiveRecord::Migration[5.0]
   def change
     create_table :prices do |t|
-      t.float :price
+      t.string :price
     end
   end
 end

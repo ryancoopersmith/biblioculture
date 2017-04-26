@@ -51,14 +51,13 @@ class BooksController < ApplicationController
     @book.image = google_spider.image
     @book.isbn_10 = google_spider.isbn_10
 
-    google_spider.scrape_prices_and_sites.each do |site|
-      book_site = Site.new(name: site[0])
-      book_price = Price.new(price: site[1], book: @book)
-      SitePrice.new(site: book_site, price: book_price)
-      Location.new(site: book_site, book: @book)
-    end
-
     if @book.save
+      google_spider.scrape_prices_and_sites.each do |site|
+        book_site = Site.create(name: site[0])
+        book_price = Price.create(price: site[1], book: @book)
+        SitePrice.create(site: book_site, price: book_price)
+        Location.create(site: book_site, book: @book)
+      end
       redirect_to @book
     else
       flash[:notice] = 'There was an error finding the book'

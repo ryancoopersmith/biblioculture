@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20170416234936) do
   end
 
   create_table "prices", force: :cascade do |t|
-    t.float   "price"
+    t.string  "price"
     t.integer "book_id"
     t.index ["book_id"], name: "index_prices_on_book_id", using: :btree
   end
