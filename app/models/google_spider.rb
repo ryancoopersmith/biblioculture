@@ -3,25 +3,32 @@ class GoogleSpider
     @name = options[:name] || ''
     @isbn_10 = options[:isbn_10] || ''
     @isbn_13 = options[:isbn_13] || ''
-    @parsed_page = ''
+    @doc = ''
   end
 
   def name
-    unfiltered_name = @parsed_page.xpath('//h1[@id="product-name"]/text()').text
+    unfiltered_name = @doc.xpath('//h1[@id="product-name"]/text()').text
     unfiltered_name.gsub(' [Book]', '')
   end
 
   def author
-    unfiltered_author = @parsed_page.xpath('//*[@id="condensed-summary-container"]/div[5]/div/span[1]').text
+    unfiltered_author = @doc.xpath('//*[@id="condensed-summary-container"]/div[5]/div/span[1]').text
+    if unfiltered_author == ''
+      unfiltered_author = @doc.xpath('//*[@id="summary-container"]/div[5]/div/span[1]').text
+    end
     unfiltered_author.gsub('by ', '')
   end
 
   def image
-    @parsed_page.xpath('//*[@id="condensed-image-cont"]/a/div/img/@src').text
+    image = @doc.xpath('//*[@id="condensed-image-cont"]/a/div/img/@src').text
+    if image == ''
+      image = @doc.xpath('//*[@id="alt-image-cont"]/div/img/@src').text
+    end
+    image
   end
 
   def isbn_10
-    unfiltered_isbn_10 = @parsed_page.xpath('//span[starts-with(text(),"ISBN")]/text()').text
+    unfiltered_isbn_10 = @doc.xpath('//span[starts-with(text(),"ISBN")]/text()').text
     unfiltered_isbn_10.gsub('ISBN ', '')
   end
 
@@ -43,21 +50,28 @@ class GoogleSpider
     page = agent.page.link_with(text: "Shop for buy #{value} book on Google").click
 
     page = agent.page.link_with(text: /^.*\[Book\]$/).click
+
     if agent.page.link_with(text: /^View\sall\s[0-9]+\sonline\sstores.*$/)
       page = agent.page.link_with(text: /^View\sall\s[0-9]+\sonline\sstores.*$/).click
+    end
+
+    page = agent.page.link_with(text: /^.*((R)|(r)){1}efurbished\s*\/\s*used.*$/).click
+
+    if agent.page.search("No matching stores")
       page = agent.page.link_with(text: /^.*((R)|(r)){1}efurbished\s*\/\s*used.*$/).click
     end
-    @parsed_page = Nokogiri::HTML(page.content)
+
+    @doc = Nokogiri::HTML(page.content)
   end
 
   def scrape_prices_and_sites
     prices = []
-    sites = @parsed_page.xpath('//tr[@class="os-row"]')
+    sites = @doc.xpath('//tr[@class="os-row"]')
 
     sites.length.times do |i|
-      site = @parsed_page.xpath('//tr[@class="os-row"]/td[@class="os-seller-name"]/span/a/text()')[i].text
+      site = @doc.xpath('//tr[@class="os-row"]/td[@class="os-seller-name"]/span/a/text()')[i].text
       site.gsub!(/\s\-.*/, '')
-      price = @parsed_page.xpath('//tr[@class="os-row"]/td[@class="os-total-col"]/text()')[i].text
+      price = @doc.xpath('//tr[@class="os-row"]/td[@class="os-total-col"]/text()')[i].text
       price.strip!
       prices.push([site, price])
     end
