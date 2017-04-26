@@ -5,7 +5,8 @@ class Info extends Component {
   constructor(props){
     super(props);
     this.state = {
-      prices: []
+      prices: [],
+      isbn_13: ''
     }
     this.getPrices = this.getPrices.bind(this);
   }
@@ -31,6 +32,9 @@ class Info extends Component {
 
   componentDidMount() {
     this.getPrices();
+    if (this.props.isbn_13 !== null) {
+      this.setState({ isbn_13: `ISBN-13: ${this.props.isbn_13}` });
+    }
   }
 
   render() {
@@ -57,7 +61,7 @@ class Info extends Component {
           ISBN-10: {this.props.isbn_10}
         </div>
         <div className='isbn'>
-          ISBN-13: {this.props.isbn_13}
+          {this.state.isbn_13}
         </div>
         {prices}
         <button className='button' type='button' onClick={this.props.onClick}>See All</button>

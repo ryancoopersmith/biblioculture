@@ -5,7 +5,9 @@
 <img src="<%= @book.image %>" width=300 height=300 />
 
 <p>ISBN-10: <%= @book.isbn_10 %></p>
-<p>ISBN-13: <%= @book.isbn_13 %></p>
+<% if @book.isbn_13 %>
+  <p>ISBN-13: <%= @book.isbn_13 %></p>
+<% end %>
 
 <h3>Prices</h3>
 
