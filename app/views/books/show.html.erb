@@ -10,7 +10,7 @@
 <h3>Prices</h3>
 
 <% @prices.each do |price| %>
-  <p>Site: <%= price[0] %>, Price: <%= price[1] %></p>
+  <p>Site: <%= price[0]['name'] %>, Price: <%= price[1]['price'] %></p>
 <% end %>
 
 <%= link_to 'Go Back', books_path, data: { turbolinks: false }, class: 'button' %>

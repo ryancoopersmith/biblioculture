@@ -12,12 +12,12 @@ class GoogleSpider
   end
 
   def author
-    unfiltered_author = @parsed_page.xpath('//*[@id="summary-container"]/div[5]/div/span[1]').text
+    unfiltered_author = @parsed_page.xpath('//*[@id="condensed-summary-container"]/div[5]/div/span[1]').text
     unfiltered_author.gsub('by ', '')
   end
 
   def image
-    @parsed_page.xpath('//*[@id="alt-image-cont"]/div/img/@src').text
+    @parsed_page.xpath('//*[@id="condensed-image-cont"]/a/div/img/@src').text
   end
 
   def isbn_10
