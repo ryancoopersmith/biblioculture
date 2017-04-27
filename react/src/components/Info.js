@@ -2,28 +2,27 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 
 class Info extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       prices: [],
       isbn_13: ''
-    }
+    };
     this.getPrices = this.getPrices.bind(this);
   }
 
   getPrices() {
     fetch(`http://localhost:3000/api/v1/books/${this.props.id}/prices.json`, {
       credentials: 'same-origin'
-      }).then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-              error = new Error(errorMessage);
-          throw(error);
-        }
-      })
-      .then(response => response.json())
+    }).then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        let errorMessage = `${response.status} (${response.statusText})`;
+        let error = new Error(errorMessage);
+        throw(error);
+      }
+    }).then(response => response.json())
       .then(body => {
         this.setState({ prices: body });
       })

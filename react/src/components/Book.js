@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import Info from './Info';
 
 class Book extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       toggle: false
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
     this.seeAll = this.seeAll.bind(this);
   }
 
   handleClick() {
-    this.setState ({ toggle: true })
+    this.setState({ toggle: true });
 
     let books = document.getElementsByClassName('book');
     for (let i = 0; i < books.length; i++) {
@@ -26,7 +26,7 @@ class Book extends Component {
   }
 
   seeAll() {
-    this.setState ({ toggle: false })
+    this.setState({ toggle: false });
 
     let books = document.getElementsByClassName('book');
     for (let i = 0; i < books.length; i++) {
@@ -60,7 +60,7 @@ class Book extends Component {
           image={this.props.image}
           onClick={this.seeAll}
         />
-      )
+      );
     } else {
       return(
         <div onClick={this.handleClick} className={gridClasses}>

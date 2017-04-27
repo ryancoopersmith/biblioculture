@@ -10,7 +10,7 @@ class BookList extends Component {
       search: '',
       prevSearch: '',
       group: 1
-    }
+    };
     this.updateSearch = this.updateSearch.bind(this);
     this.updateGroup = this.updateGroup.bind(this);
     this.getBooks = this.getBooks.bind(this);
@@ -35,16 +35,15 @@ class BookList extends Component {
   getBooks() {
     fetch('http://localhost:3000/api/v1/books.json', {
       credentials: 'same-origin'
-      }).then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-              error = new Error(errorMessage);
-          throw(error);
-        }
-      })
-      .then(response => response.json())
+    }).then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        let errorMessage = `${response.status} (${response.statusText})`;
+        let error = new Error(errorMessage);
+        throw(error);
+      }
+    }).then(response => response.json())
       .then(body => {
         this.setState({ books: body });
       })
@@ -74,7 +73,7 @@ class BookList extends Component {
 
     let books = this.state.books.map((book, index) => {
       if (book.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.author.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || book.isbn_10 === this.state.search || book.isbn_13 === this.state.search) {
-        found = true
+        found = true;
         return (
           <Book
             key={index + 1}
@@ -118,7 +117,7 @@ class BookList extends Component {
         <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
         <button type="button" onClick={() => this.updateGroup(1)} className={paginateClasses}>Next</button>
         </div>;
-      } else if (this.state.group === pageSize && pageSize !== 1){
+      } else if (this.state.group === pageSize && pageSize !== 1) {
         page = <div className="center">
         <button type="button" onClick={() => this.updateGroup(-1)} className={paginateClasses}>Previous</button>
         </div>;
