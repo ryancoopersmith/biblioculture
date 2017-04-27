@@ -9,6 +9,10 @@
   <p>ISBN-13: <%= @book.isbn_13 %></p>
 <% end %>
 
+<div id="bookID"><%= @book.id %></div>
+
+<canvas id="scatterPlot"></canvas>
+
 <h3>Prices</h3>
 
 <% @prices.each do |price| %>
