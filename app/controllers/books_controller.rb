@@ -46,8 +46,8 @@ class BooksController < ApplicationController
 
     google_spider.find_book
 
-    @book.name = google_spider.name
-    @book.author = google_spider.author
+    @book.name = google_spider.name.force_encoding('iso8859-1').encode('utf-8')
+    @book.author = google_spider.author.force_encoding('iso8859-1').encode('utf-8')
     @book.image = google_spider.image
     @book.isbn_10 = google_spider.isbn_10
 
