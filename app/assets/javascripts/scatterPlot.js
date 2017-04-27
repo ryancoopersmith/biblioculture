@@ -23,6 +23,33 @@ window.onload = () => {
       ctx.width = 300;
       ctx.height = 300;
 
+      let flattenedPrices = [];
+      prices[0].forEach((price, index) => {
+        let formattedPrice = parseInt(price[1].price.replace('$', ''));
+        flattenedPrices.push(formattedPrice);
+      });
+
+      let sortedPrices = [];
+      let pricesLength = flattenedPrices.length;
+      for (let i = 1; i < pricesLength + 1; i++) {
+        let max = Math.max(...flattenedPrices); // spread operator treats [1,2,3] as 1,2,3
+        if (i % 2 === 0) {
+          sortedPrices.push(max);
+        } else {
+          sortedPrices.unshift(max);
+        }
+        let index = flattenedPrices.indexOf(max);
+        flattenedPrices.splice(index, 1);
+      }
+
+      let points = [];
+      sortedPrices.forEach((price, index) => {
+        points.push({
+          x: index,
+          y: price
+        });
+      });
+
       let data = {
         datasets: [{
           label: 'Prices',
@@ -30,16 +57,7 @@ window.onload = () => {
           pointBorderColor: '#C244C1',
           pointRadius: 5,
           pointBorderWidth: 2.5,
-          data: [{
-            x: -10,
-            y: 0
-          }, {
-            x: 0,
-            y: 10
-          }, {
-            x: 10,
-            y: 5
-          }]
+          data: points
         }]
       };
 
