@@ -1,9 +1,12 @@
-<h1>Add Room</h1>
+<h2 class='text-center'>Add Room</h2>
 
 <%= form_for @room do |f| %>
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.text_field :title, autofocus: true %>
+  <div class="row">
+    <div class = "small-offset-3 small-6 columns">
+      <%= f.label :title, 'Title', class: 'input-group-label' %>
+      <%= f.text_field :title, autofocus: true %>
+    </div>
+    <div class = "small-offset-3 columns"></div>
   </div>
 
   <%= f.submit 'Add', class: 'button' %>

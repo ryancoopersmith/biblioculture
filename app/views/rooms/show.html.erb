@@ -1,14 +1,17 @@
-<h1><%= @room.title %></h1>
+<h2 class='text-center'><%= @room.title %></h2>
 
 <div id="messages" data-room-id="<%= @room.id %>">
   <%= render @room.messages %>
 </div>
 
 <%= form_for @message, url: '#' do |f| %>
-  <div class="field">
-    <%= f.label :body %>
-    <%= f.text_area :body %>
-    <small>(Maximum 500 characters)</small>
+  <div class="row">
+    <div class = "small-offset-3 small-6 columns">
+      <%= f.label :body, 'Body', class: 'input-group-label' %>
+      <%= f.text_area :body %>
+      <small>(Maximum 500 characters)</small>
+    </div>
+    <div class = "small-offset-3 columns"></div>
   </div>
 
   <%= f.submit 'Send', class: 'button' %>
