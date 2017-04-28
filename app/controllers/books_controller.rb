@@ -23,6 +23,18 @@ class BooksController < ApplicationController
         end
       end
     end
+
+    current_book = @book.id
+    last_book = Book.last.id
+    if current_book != last_book
+      next_book = (params[:id].to_i + 1).to_s
+      @next = Book.find(next_book)
+    end
+    first_book = Book.first.id
+    if current_book != first_book
+      previous_book = (params[:id].to_i + 1).to_s
+      @previous = Book.find(previous_book)
+    end
   end
 
   def new
@@ -69,8 +81,7 @@ class BooksController < ApplicationController
         end
       end
     end
-    binding.pry
-    # Redirect to show page for all books added here
+    redirect_to @books[0]
   end
 
   def edit

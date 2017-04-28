@@ -29,6 +29,12 @@ window.onload = () => {
         flattenedPrices.push(formattedPrice);
       });
 
+      // let sum = flattenedPrices.reduce((prev, curr) => {
+      //   prev + curr;
+      // }, 0);
+      //
+      // console.log(sum)
+
       let sortedPrices = [];
       let pricesLength = flattenedPrices.length;
       for (let i = 1; i < pricesLength + 1; i++) {
