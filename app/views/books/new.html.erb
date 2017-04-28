@@ -1,6 +1,6 @@
 <h2 class='text-center'>Add Book</h2>
 
-<h3>You can add a book by entering its title, ISBN-10 or ISBN-13</h3>
+<h3 class='text-center'>You can add a book by entering its title, ISBN-10 or ISBN-13</h3>
 
 <%= form_tag books_path do %>
   <% @books.each_with_index do |book, index| %>
@@ -34,7 +34,7 @@
     <% end %>
   <% end %>
 
-  <%= submit_tag 'Add', class: 'button' %>
+  <%= submit_tag 'Add', class: 'button button-center' %>
 <% end %>
 
 <%= link_to 'Go Back', books_path, data: { turbolinks: false }, class: 'button' %>
