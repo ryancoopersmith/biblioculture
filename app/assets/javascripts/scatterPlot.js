@@ -39,27 +39,6 @@ window.onload = () => {
       let squaredMean = squaredSum / squaredPrices.length;
       let stdDeviation = Math.sqrt(squaredMean);
 
-      let sortedPrices = [];
-      let pricesLength = flattenedPrices.length;
-      for (let i = 1; i < pricesLength + 1; i++) {
-        let max = Math.max(...flattenedPrices); // spread operator treats [1,2,3] as 1,2,3
-        if (i % 2 === 0) {
-          sortedPrices.push(max);
-        } else {
-          sortedPrices.unshift(max);
-        }
-        let index = flattenedPrices.indexOf(max);
-        flattenedPrices.splice(index, 1);
-      }
-
-      let points = [];
-      sortedPrices.forEach((price, index) => {
-        points.push({
-          x: index,
-          y: price
-        });
-      });
-
       let data = {
         datasets: [{
           label: 'Prices',
@@ -67,7 +46,36 @@ window.onload = () => {
           pointBorderColor: '#C244C1',
           pointRadius: 5,
           pointBorderWidth: 2.5,
-          data: points
+          data: [
+            {
+              x: mean - (3 * stdDeviation),
+              y: 0.1
+            },
+            {
+              x: mean - (2 * stdDeviation),
+              y: 2
+            },
+            {
+              x: mean - stdDeviation,
+              y: 14
+            },
+            {
+              x: mean,
+              y: 34
+            },
+            {
+              x: mean + stdDeviation,
+              y: 14
+            },
+            {
+              x: mean + (2 * stdDeviation),
+              y: 2
+            },
+            {
+              x: mean + (3 * stdDeviation),
+              y: 0.1
+            }
+          ]
         }]
       };
 
