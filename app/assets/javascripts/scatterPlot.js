@@ -20,8 +20,8 @@ window.onload = () => {
   let check = () => {
     if (prices[0]) {
       let ctx = document.getElementById('scatterPlot');
-      ctx.width = 300;
-      ctx.height = 300;
+      ctx.width = 500;
+      ctx.height = 500;
 
       let flattenedPrices = [];
       prices[0].forEach((price, index) => {

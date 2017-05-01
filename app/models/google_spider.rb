@@ -47,7 +47,7 @@ class GoogleSpider
     search_form = page.form('f')
     search_form.q = "buy #{value} book"
     page = agent.submit(search_form)
-    page = agent.page.link_with(text: "Shop for buy #{value} book on Google").click
+    page = agent.page.link_with(text: /^Shop\sfor\sbuy\s.+\son\sGoogle$/).click
 
     page = agent.page.link_with(text: /^.*\[Book\]$/).click
 
