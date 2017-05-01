@@ -29,11 +29,15 @@ window.onload = () => {
         flattenedPrices.push(formattedPrice);
       });
 
-      // let sum = flattenedPrices.reduce((prev, curr) => {
-      //   prev + curr;
-      // }, 0);
-      //
-      // console.log(sum)
+      let sum = flattenedPrices.reduce((a, b) => a + b, 0);
+      let mean = sum / flattenedPrices.length;
+      let squaredPrices = [];
+      flattenedPrices.forEach((price) => {
+        squaredPrices.push(Math.pow((price - mean), 2));
+      });
+      let squaredSum = squaredPrices.reduce((a, b) => a + b, 0);
+      let squaredMean = squaredSum / squaredPrices.length;
+      let stdDeviation = Math.sqrt(squaredMean);
 
       let sortedPrices = [];
       let pricesLength = flattenedPrices.length;
