@@ -11,14 +11,29 @@
 
 <div id="bookID"><%= @book.id %></div>
 
-<p>
-  Normal Distribution: (Using 3 Standard Deviations)
-  68% of the prices are within one standard deviation of the mean
-  95% of the prices are within two standard deviations of the mean
-  99.7% of the prices are within three standard deviations of the mean
-  Recommendation: Buy books at -1σ and sell books at 1σ
-</p>
+<h3>Normal Distribution Graph: (Using 3 Standard Deviations)</h3>
+<h5>Each line segment represents a standard deviation</h5>
+<ul>
+  <li>
+    68% of the prices are within one standard deviation of the mean
+  </li>
+  <li>
+    95% of the prices are within two standard deviations of the mean
+  </li>
+  <li>
+    99.7% of the prices are within three standard deviations of the mean
+  </li>
+</ul>
+
 <canvas id="scatterPlot"></canvas>
+
+<p>
+  <strong>Recommendation: Buy books at -1σ and sell books at 1σ</strong>
+</p>
+
+<ul id="targetPrices">
+
+</ul>
 
 <h3>Prices</h3>
 

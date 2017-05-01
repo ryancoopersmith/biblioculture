@@ -48,31 +48,31 @@ window.onload = () => {
           pointBorderWidth: 2.5,
           data: [
             {
-              x: mean - (3 * stdDeviation),
+              x: (mean - (3 * stdDeviation)).toFixed(2),
               y: 0.1
             },
             {
-              x: mean - (2 * stdDeviation),
+              x: (mean - (2 * stdDeviation)).toFixed(2),
               y: 2
             },
             {
-              x: mean - stdDeviation,
+              x: (mean - stdDeviation).toFixed(2),
               y: 14
             },
             {
-              x: mean,
+              x: (mean).toFixed(2),
               y: 34
             },
             {
-              x: mean + stdDeviation,
+              x: (mean + stdDeviation).toFixed(2),
               y: 14
             },
             {
-              x: mean + (2 * stdDeviation),
+              x: (mean + (2 * stdDeviation)).toFixed(2),
               y: 2
             },
             {
-              x: mean + (3 * stdDeviation),
+              x: (mean + (3 * stdDeviation)).toFixed(2),
               y: 0.1
             }
           ]
@@ -87,11 +87,31 @@ window.onload = () => {
           scales: {
             xAxes: [{
               type: 'linear',
-              position: 'bottom'
+              position: 'bottom',
+              scaleLabel: {
+                display: true,
+                labelString: 'Prices'
+              }
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Percentages'
+              }
             }]
           }
         }
       });
+
+      let negOneStdPrice = document.createElement('li');
+      let meanPrice = document.createElement('li');
+      let oneStdPrice = document.createElement('li');
+      negOneStdPrice.innerText = `-1σ: $${(mean - stdDeviation).toFixed(2)}`;
+      meanPrice.innerText = `0σ: $${(mean).toFixed(2)}`;
+      oneStdPrice.innerText = `1σ: $${(mean + stdDeviation).toFixed(2)}`;
+      document.getElementById('targetPrices').appendChild(negOneStdPrice);
+      document.getElementById('targetPrices').appendChild(oneStdPrice);
+      document.getElementById('targetPrices').appendChild(meanPrice);
     } else {
       setTimeout(check, 100);
     }
