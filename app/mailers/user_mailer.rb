@@ -7,11 +7,13 @@ class UserMailer < ApplicationMailer
     )
   end
 
-  def new_message(user)
-    @user = user
+  def new_message(to, from, message)
+    @to = to
+    @from = from
+    @message = message
     mail(
-      to: user.email,
-      subject: "New message from "
+      to: to.email,
+      subject: "New message from #{from.username}"
     )
   end
 end

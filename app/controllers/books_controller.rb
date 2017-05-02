@@ -32,7 +32,7 @@ class BooksController < ApplicationController
     end
     first_book = Book.first.id
     if current_book != first_book
-      previous_book = (params[:id].to_i + 1).to_s
+      previous_book = (params[:id].to_i - 1).to_s
       @previous = Book.find(previous_book)
     end
   end

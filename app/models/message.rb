@@ -4,7 +4,7 @@ class Message < ApplicationRecord
   validates :body, presence: true, length: { minimun: 1, maximum: 500 }
 
   belongs_to :user
-  belongs_to :chat_room
+  belongs_to :room
 
   def timestamp
     day = created_at.strftime('%B %d, %Y')
