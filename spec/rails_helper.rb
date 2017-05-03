@@ -90,3 +90,8 @@ RSpec.configure do |config|
   end
 
 end
+
+# configure devise for tests
+RSpec.configure do |config|
+  config.include Devise::Test::ControllerHelpers, type: :controller
+end
