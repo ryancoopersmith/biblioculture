@@ -28,11 +28,18 @@ window.onload = () => {
         let formattedPrice = parseInt(price[1].price.replace('$', ''));
         flattenedPrices.push(formattedPrice);
       });
-
-      let sum = flattenedPrices.reduce((a, b) => a + b, 0);
-      let mean = sum / flattenedPrices.length;
-      let squaredPrices = [];
+      let outlierSum = flattenedPrices.reduce((a, b) => a + b, 0);
+      let outlierMean = outlierSum / flattenedPrices.length;
+      let filteredPrices = [];
       flattenedPrices.forEach((price) => {
+        if (price <= outlierMean * 3 && price >= outlierMean / 3) {
+          filteredPrices.push(price);
+        }
+      })
+      let sum = filteredPrices.reduce((a, b) => a + b, 0);
+      let mean = sum / filteredPrices.length;
+      let squaredPrices = [];
+      filteredPrices.forEach((price) => {
         squaredPrices.push(Math.pow((price - mean), 2));
       });
       let squaredSum = squaredPrices.reduce((a, b) => a + b, 0);
