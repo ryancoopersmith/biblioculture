@@ -16,9 +16,12 @@ class RoomsController < ApplicationController
     @room = current_user.rooms.new(room_params)
     if @room.save
       flash[:success] = 'Room added'
-      redirect_to rooms_path
+      @rooms = Room.all
+      render action: 'index'
     else
-      render 'new'
+      flash[:notice] = @room.errors.full_messages
+      @room = Room.new
+      render action: 'new'
     end
   end
 

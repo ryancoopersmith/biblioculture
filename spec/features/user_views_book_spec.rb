@@ -10,4 +10,11 @@ feature 'user views book' do
   # [X] I should see the sites and their associated prices for the book
   # [X] I should see the recommended prices to sell/buy the book at
   # [X] I should be able to go to the next and previous books that I've added
+  scenario 'user views book' do
+    expect(page).to have_content("By: Francis Scott Fitzgerald")
+    expect(page).to have_content("The Great Gatsby")
+    expect(page).to have_content("068416325X")
+    expect(page).to have_content("Site: Thrift Books, Price: $4.78")
+    expect(page).to have_content("Site: Discover Books, Price: $3.58")
+  end
 end

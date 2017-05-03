@@ -43,6 +43,7 @@ class BooksController < ApplicationController
   end
 
   def create
+    not_found_counter = 0
     @books = []
     params['books'].each do |book|
       if book['name'] != '' || book['isbn_10'] != '' || book['isbn_13'] != ''
@@ -54,9 +55,6 @@ class BooksController < ApplicationController
         elsif book['isbn_13'] != ''
           google_spider = GoogleSpider.new(isbn_13: books_params(book)['isbn_13'])
           @book.isbn_13 = google_spider.isbn_13
-        else
-          flash[:notice] = 'You must supply either the title, ISBN-10 or ISBN-13'
-          render action: 'new'
         end
 
         google_spider.find_book
@@ -75,13 +73,23 @@ class BooksController < ApplicationController
           end
           @books << @book
         else
-          flash[:notice] = 'There was an error finding the book'
-          @book = Book.new
-          render action: 'new'
+          flash[:notice] = @book.errors.full_messages
+          @books = []
+          10.times { @books << Book.new }
+          render action: 'new' and return 1
         end
+      else
+        not_found_counter += 1
       end
     end
-    redirect_to @books[0]
+    if not_found_counter == 10
+      flash[:notice] = 'You must supply either the title, ISBN-10 or ISBN-13'
+      @books = []
+      10.times { @books << Book.new }
+      render action: 'new'
+    else
+      redirect_to @books[0]
+    end
   end
 
   def edit
