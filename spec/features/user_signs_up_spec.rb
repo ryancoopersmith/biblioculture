@@ -34,7 +34,7 @@ feature 'user signs up' do
     fill_in 'Password Confirmation', with: 'password'
     click_button 'Sign Up'
 
-    expect(page).to have_content("You've successfully signed up!")
+    expect(page).to have_content("Welcome! You have signed up successfully.")
     expect(page).to_not have_content('Sign Up')
     expect(page).to_not have_content('Sign In')
     expect(ActionMailer::Base.deliveries.count).to eq(1)
@@ -50,7 +50,7 @@ feature 'user signs up' do
 
     expect(page).to have_content("Password confirmation doesn't match")
     expect(page).to have_content('Sign Up')
-    expect(page).to_not have_content("You've successfully signed up!")
+    expect(page).to_not have_content("Welcome! You have signed up successfully.")
   end
 
   scenario 'user provides invalid email' do
@@ -61,7 +61,7 @@ feature 'user signs up' do
     fill_in 'Password Confirmation', with: 'password'
     click_button 'Sign Up'
 
-    expect(page).to_not have_content("You've successfully signed up!")
+    expect(page).to_not have_content("Welcome! You have signed up successfully.")
     expect(page).to have_content('Email is invalid')
     expect(page).to have_content('Sign Up')
   end
@@ -73,7 +73,7 @@ feature 'user signs up' do
     fill_in 'Password Confirmation', with: 'password'
     click_button 'Sign Up'
 
-    expect(page).to_not have_content("You've successfully signed up!")
+    expect(page).to_not have_content("Welcome! You have signed up successfully.")
     expect(page).to have_content("Email can't be blank")
     expect(page).to have_content('Sign Up')
   end
