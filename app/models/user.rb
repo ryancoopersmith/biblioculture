@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true, format: { with: /\A((\w+)|(\.))+\@[a-z]+\.[a-z]{3}\z/ }
-  validates :role, inclusion: { in: ['admin', 'member'] }
+  validates :role, inclusion: { in: ['admin', 'member'] }, presence: true
 
   has_many :rooms, dependent: :destroy
   has_many :messages, dependent: :destroy
