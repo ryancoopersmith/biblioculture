@@ -16,8 +16,8 @@ class RoomsController < ApplicationController
     @room = current_user.rooms.new(room_params)
     if @room.save
       flash[:success] = 'Room added'
-      @rooms = Room.all
-      render action: 'index'
+      @message = Message.new
+      render action: 'show', id: @room.id
     else
       flash[:notice] = @room.errors.full_messages
       @room = Room.new

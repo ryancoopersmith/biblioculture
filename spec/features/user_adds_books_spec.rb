@@ -18,11 +18,13 @@ feature 'user adds books' do
     click_button "Sign In"
     click_link "Add Books"
 
-    fill_in "Title", with: "The Great Gatsby"
-    fill_in "Title", with: "Peter Pan"
+    fill_in "book-field-1", with: "The Great Gatsby"
+    fill_in "book-field-2", with: "Peter Pan"
     click_button "Add"
+    expect(page).to have_content("Fitzgerald")
+    click_link "Next Book"
 
-    expect(page).to have_content("By: Francis Scott Fitzgerald")
+    expect(page).to have_content("Barrie")
   end
 
   scenario 'user submits empty form' do
@@ -32,7 +34,7 @@ feature 'user adds books' do
     click_button "Sign In"
     click_link "Add Books"
 
-    fill_in "Title", with: ""
+    fill_in "book-field-1", with: ""
     click_button "Add"
 
     expect(page).to have_content("You must supply either the title, ISBN-10 or ISBN-13")
