@@ -64,20 +64,14 @@ class BooksController < ApplicationController
         @book.image = google_spider.image
         @book.isbn_10 = google_spider.isbn_10
 
-        if @book.save
-          google_spider.scrape_prices_and_sites.each do |site|
-            book_site = Site.create(name: site[0])
-            book_price = Price.create(price: site[1], book: @book)
-            SitePrice.create(site: book_site, price: book_price)
-            Location.create(site: book_site, book: @book)
-          end
-          @books << @book
-        else
-          flash[:notice] = @book.errors.full_messages
-          @books = []
-          10.times { @books << Book.new }
-          render action: 'new' and return 1
+        @book.save
+        google_spider.scrape_prices_and_sites.each do |site|
+          book_site = Site.create(name: site[0])
+          book_price = Price.create(price: site[1], book: @book)
+          SitePrice.create(site: book_site, price: book_price)
+          Location.create(site: book_site, book: @book)
         end
+        @books << @book
       else
         not_found_counter += 1
       end
