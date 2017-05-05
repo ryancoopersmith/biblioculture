@@ -1,3 +1,5 @@
+require "net/http"
+
 class GoogleSpider
   def initialize(options = {})
     @name = options[:name] || ''
@@ -33,12 +35,21 @@ class GoogleSpider
   end
 
   def find_book
-    if @name
+    if @name != ''
       value = @name
-    elsif @isbn_10
-      value = @isbn_10
     else
-      value = @isbn_13
+      key = ENV["ISBNDB_ACCESS_KEY"]
+      if @isbn_10 != ''
+        uri = URI("http://www.isbndb.com/api/v2/json/#{key}/book/#{@isbn_10}")
+      else
+        uri = URI("http://www.isbndb.com/api/v2/json/#{key}/book/#{@isbn_13}")
+      end
+      response = Net::HTTP.get_response(uri)
+      if response.code == "301"
+        response = Net::HTTP.get_response(URI.parse(response.header['location']))
+      end
+      data = JSON.parse(response.body)
+      value = data['data'][0]['title']
     end
 
     agent = Mechanize.new

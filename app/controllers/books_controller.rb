@@ -54,7 +54,7 @@ class BooksController < ApplicationController
           google_spider = GoogleSpider.new(isbn_10: books_params(book)['isbn_10'])
         elsif book['isbn_13'] != ''
           google_spider = GoogleSpider.new(isbn_13: books_params(book)['isbn_13'])
-          @book.isbn_13 = google_spider.isbn_13
+          @book.isbn_13 = books_params(book)['isbn_13']
         end
 
         google_spider.find_book
