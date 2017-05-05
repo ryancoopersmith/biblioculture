@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
-//= require_tree .
+//= require paginateForm
+// require_tree .
 
 $(function(){ $(document).foundation(); });

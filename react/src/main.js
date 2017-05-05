@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import BookList from './components/BookList';
 
-$(function() {
+$(document).ready(function () {
   ReactDOM.render(
     <BookList />,
     document.getElementById('main')
