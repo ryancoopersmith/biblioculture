@@ -20,7 +20,7 @@ class BookList extends Component {
     let prevSearch = this.state.search;
     this.setState({ prevSearch: prevSearch });
     this.setState({ search: event.target.value });
-    if (this.state.search.length === 1 && this.state.prevSearch > this.state.search) {
+    if (this.state.search.length === 1 && this.state.prevSearch.length > this.state.search.length) {
       this.setState({ group: 1 });
     } else if (this.state.search.length > -1){
       this.setState({ group: 0 });

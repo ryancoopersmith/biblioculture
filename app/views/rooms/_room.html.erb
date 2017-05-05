@@ -1,3 +1,4 @@
 <li>
   <%= link_to "Enter #{room.title}", room_path(room) %>
+  <p>Created by <%= room.user.username %></p>
 </li>
