@@ -92,12 +92,6 @@ class BooksController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-  end
-
   private
 
   def books_params(book_params)

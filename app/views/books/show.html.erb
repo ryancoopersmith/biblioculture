@@ -44,9 +44,9 @@
 <%= link_to 'Go Back', books_path, data: { turbolinks: false }, class: 'button' %>
 
 <% if @previous %>
-<%= link_to 'Previous Book', book_path(@previous), data: { turbolinks: false }, class: 'button' %>
+<%= link_to 'Previous Book', book_path(@previous), class: 'button' %>
 <% end %>
 
 <% if @next %>
-  <%= link_to 'Next Book', book_path(@next), data: { turbolinks: false }, class: 'button' %>
+  <%= link_to 'Next Book', book_path(@next), class: 'button' %>
 <% end %>
