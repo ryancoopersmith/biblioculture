@@ -1,4 +1,4 @@
-window.onload = () => {
+jQuery(document).on('turbolinks:load', () => {
   if (window.location.href.match(/^.*\/books\/new$/)) {
     let fields = document.getElementsByClassName('formPage');
     for (let i = 0; i < fields.length; i++) {
@@ -35,4 +35,4 @@ window.onload = () => {
       i--;
     };
   }
-};
+});

@@ -1,4 +1,4 @@
-window.onload = () => {
+jQuery(document).on('turbolinks:load', () => {
   if (window.location.href.match(/^.*\/books\/[0-9]+$/)) {
     let bookID = document.getElementById('bookID').innerHTML;
     let prices = [];
@@ -127,4 +127,4 @@ window.onload = () => {
 
     check();
   }
-};
+});
