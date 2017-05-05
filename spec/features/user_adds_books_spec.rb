@@ -11,7 +11,7 @@ feature 'user adds books' do
 
   let!(:user) { FactoryGirl.create(:user) }
 
-  scenario 'user successfully adds books' do
+  scenario 'user successfully adds books by title' do
     visit new_user_session_path
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
@@ -25,6 +25,38 @@ feature 'user adds books' do
     click_link "Next Book"
 
     expect(page).to have_content("Barrie")
+  end
+
+  scenario 'user successfully adds books by ISBN-10' do
+    visit new_user_session_path
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
+    click_button "Sign In"
+    click_link "Add Books"
+
+    fill_in "isbn-10-field-1", with: "1597226769"
+    fill_in "isbn-10-field-2", with: "014243793X"
+    click_button "Add"
+    expect(page).to have_content("Fitzgerald")
+    click_link "Next Book"
+
+    expect(page).to have_content("Barrie")
+  end
+
+  scenario 'user successfully adds books by ISBN-13' do
+    visit new_user_session_path
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
+    click_button "Sign In"
+    click_link "Add Books"
+
+    fill_in "isbn-13-field-1", with: "9780199536405"
+    fill_in "isbn-13-field-2", with: "9780747545927"
+    click_button "Add"
+    expect(page).to have_content("Fitzgerald")
+    click_link "Next Book"
+
+    expect(page).to have_content("Rowling")
   end
 
   scenario 'user submits empty form' do

@@ -12,7 +12,7 @@
       <div class="formPage">
         <div class="row">
           <div class="small-offset-3 small-6 columns">
-            <i>(Optional)</i>
+            <i>(Optional, Provide as much information as possible, Ex: 1st edition, hardcover, etc)</i>
             <%= f.label :name, 'Title', class: 'input-group-label' %>
             <%= f.text_field :name, autofocus: true, id: "book-field-#{index + 1}" %>
           </div>
@@ -21,7 +21,7 @@
 
         <div class="row">
           <div class="small-offset-3 small-6 columns">
-            <i>(Optional)</i>
+            <i>(Optional, Recommended over ISBN-13)</i>
             <%= f.label :isbn_10, 'ISBN-10', class: 'input-group-label' %>
             <%= f.text_field :isbn_10, autofocus: true, id: "isbn-10-field-#{index + 1}" %>
           </div>
